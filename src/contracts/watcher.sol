@@ -22,6 +22,7 @@ contract CeloDonate{
         string category;
         uint totalAmount;
         uint totalPersons;
+        uint priceGoal;
     }
     
     address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
@@ -39,7 +40,8 @@ contract CeloDonate{
         address payable _organizationAddress,
         string memory _name,
         string memory _category,
-        string memory _description
+        string memory _description,
+        uint _priceGoal
     
     )public isAdmin(){
         organizations[organizationLength] = Organization(
@@ -48,7 +50,8 @@ contract CeloDonate{
             _category,
             _description,
             0,
-            0
+            0,
+            _priceGoal
         );
         
          organizationLength++;
@@ -74,6 +77,7 @@ contract CeloDonate{
         string memory,
         string memory,
         uint,
+        uint,
         uint
     ){
         Organization storage organization = organizations[_index];
@@ -83,7 +87,8 @@ contract CeloDonate{
             organization.category,
             organization.description,
             organization.totalAmount,
-            organization.totalPersons
+            organization.totalPersons,
+            organization.priceGoal
         );
     }
     

@@ -64,25 +64,30 @@ function App() {
       .getOrganizationLength()
       .call();
     const organizations = [];
-
-    for (let index = 0; index < organizationLength; index++) {
-      let _organizations = new Promise(async (resolve, reject) => {
-        let organization = await contract.methods
-          .getOrganizations(index)
-          .call();
-
-        resolve({
-          index: index,
-          organizationAddress: organization[0],
-          name: organization[1],
-          category: organization[2],
-          description: organization[3],
-          totalAmount: organization[4],
-          totalPersons: organization[5],
+    try {
+      for (let index = 0; index < organizationLength; index++) {
+        let _organizations = new Promise(async (resolve, reject) => {
+          let organization = await contract.methods
+            .getOrganizations(index)
+            .call();
+  
+          resolve({
+            index: index,
+            organizationAddress: organization[0],
+            name: organization[1],
+            category: organization[2],
+            description: organization[3],
+            totalAmount: organization[4],
+            totalPersons: organization[5],
+            isVerified: organization[6]
+          });
         });
-      });
-      organizations.push(_organizations);
+        organizations.push(_organizations);
+      }
+    } catch (error) {
+      console.log(error)
     }
+
 
     const _organizations = await Promise.all(organizations);
     setOrganizations(_organizations);
